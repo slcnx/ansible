@@ -1,0 +1,6 @@
+# hostname is same as ansible_default_ipv4.address
+- hosts: all
+  remote_user: root
+  roles:
+  - { role: agent, enable_remote: 1, agent_passive_server_ip: 172.16.0.72, agent_active_server_ip: 172.16.0.72 }
+

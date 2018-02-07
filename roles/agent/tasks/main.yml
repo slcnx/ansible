@@ -1,0 +1,14 @@
+- name: install zabbix yum repository
+  copy: src=zabbix.repo dest=/etc/yum.repos.d/zabbix.repo
+- name: install agent packages
+  yum: name={{ item }} state=latest
+  with_items:
+  - zabbix-agent
+  - zabbix-sender
+  when: ansible_os_family == "RedHat"
+- name: configure agent
+  template: src=zabbix_agentd.conf.j2 dest=/etc/zabbix/zabbix_agentd.conf
+  notify: restart agent
+- name: start agent
+  service: name=zabbix-agent state=started
+
